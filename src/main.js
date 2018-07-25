@@ -14,9 +14,9 @@ import 'swiper/dist/css/swiper.css'
 Vue.config.productionTip = false
 fastClick.attach(document.body)
 Vue.use(VueAwesomeSwiper)
-// Vue.use(VueLazyload, {
-//   loading: require('assets/image/default.png')
-// })
+Vue.use(VueLazyload, {
+  loading: require('assets/image/default.png')
+})
 
 /* eslint-disable no-new */
 new Vue({
