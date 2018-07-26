@@ -7,6 +7,7 @@ import fastClick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import store from './store/index'
 import router from './router/index'
+import 'assets/styles/border.css'    //1px像素边框
 
 import 'assets/stylus/index.styl'
 import 'swiper/dist/css/swiper.css'
