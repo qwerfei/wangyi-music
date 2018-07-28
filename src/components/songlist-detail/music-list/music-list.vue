@@ -20,7 +20,7 @@
             <span class="text">随机播放全部</span>
             <span class="count">(共{{songs.length}}首)</span>
           </div>
-          <song-list :songs="songs"></song-list>
+          <song-list :songs="songs" @select="selectItem"></song-list>
         </div>
       </div>
     </div>
@@ -30,6 +30,7 @@
 <script>
   import SongList from 'common/song-list/song-list'
   import Bscroll from 'better-scroll'
+  import {mapActions} from 'vuex'
 
   const RESERVED_HEIGHT = 50
 
@@ -74,6 +75,12 @@
       back() {
         this.$router.back()
       },
+      selectItem(item, index) {
+        this.selectPlay({
+          list: this.songs,
+          index
+        })
+      },
       _initScroll() {
         this.scroll = new Bscroll(this.$refs.list, {
           probeType: 3,
@@ -85,6 +92,9 @@
           // console.log(this.scrollY)
         })
       },
+      ...mapActions([
+        'selectPlay'
+      ])
     },
     watch: {
       //根据scrollY值改变标题名称和颜色

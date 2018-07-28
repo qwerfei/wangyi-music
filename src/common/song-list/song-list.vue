@@ -1,9 +1,10 @@
 <template>
   <div class="song-list">
     <ul>
-      <li  class="item border-bottom"
-            v-for="(song, index) in songs"
-          :key="song.id">
+      <li class="item border-bottom"
+          v-for="(song, index) in songs"
+          :key="song.id"
+          @click="selectItem(song, index)">
         <span class="count">{{index + 1}}</span>
         <div class="content">
           <h2 class="name">{{song.name}}</h2>
@@ -20,6 +21,11 @@
       songs: {
         type: Array,
         default: []
+      }
+    },
+    methods: {
+      selectItem (item, index) {
+        this.$emit('select', item, index)
       }
     }
   }
