@@ -4,7 +4,8 @@
       <ul>
         <li class="item"
             v-for="item in discList"
-            :key="item.dissid">
+            :key="item.dissid"
+            @click="selectRecommend(item)">
           <div class="icon">
             <span class="icon-top">
               <i class="icon icon-erji"></i>
@@ -22,8 +23,9 @@
 </template>
 
 <script>
-import {getDiscList} from 'api/recommend'
-import {ERR_OK} from 'common/api'
+import {getRecommendList} from 'api/recommend'
+import {ERR_OK} from 'common/js/api'
+import {mapMutations} from 'vuex'
 export default {
   name: 'RecommendList',
   data() {
@@ -32,17 +34,27 @@ export default {
     }
   },
   created() {
-    this._getDiscList()
+    this._getRecommendList()
   },
   methods: {
-    _getDiscList() {
-      getDiscList().then((res) => {
+    _getRecommendList() {
+      getRecommendList().then((res) => {
         if (res.code === ERR_OK) {
           this.discList = res.data.list
           console.log(res.data.list)
         }
       })
-    }
+    },
+    //推荐歌单歌曲详情跳转
+    selectRecommend(item) {
+      this.$router.push({
+        path: `./recommend/${item.dissid}`
+      })
+      this.setRecommend(item)
+    },
+    ...mapMutations({
+      setRecommend: 'SET_RECOMMEND'
+    })
   }
 }
 </script>

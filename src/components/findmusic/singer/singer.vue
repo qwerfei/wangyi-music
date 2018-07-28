@@ -2,6 +2,7 @@
   <div class="singer">
     <singer-list :singers="singers" :letter="letter"></singer-list>
     <list-shortcut :singers="singers" @change="handleShortcutListClick"></list-shortcut>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,7 +10,7 @@
 import SingerList from './components/list'
 import ListShortcut from './components/shortcut'
 import {getSingerList} from 'api/singer'
-import {ERR_OK} from 'common/api'
+import {ERR_OK} from 'common/js/api'
 
 const HOT_SINGER_LEN = 10
 const HOT_NAME = '热门'

@@ -10,7 +10,8 @@
         <ul>
           <li class="list-group-item border-bottom"
               v-for="item in group.singerlist"
-              :key="item.id" >
+              :key="item.id"
+              @click="selectSinger(item)">
             <img class="avatar" v-lazy="item.avatar">
             <span class="name">{{item.name}}</span>
           </li>
@@ -22,6 +23,7 @@
 
 <script>
 import Bscroll from 'better-scroll'
+import {mapMutations} from 'vuex'
 export default {
   props: {
     singers: {
@@ -34,6 +36,18 @@ export default {
   },
   mounted() {
     this.scroll = new Bscroll(this.$refs.singerlist, {click: true})
+  },
+  methods: {
+    //歌手歌曲详情列表跳转
+    selectSinger(singer) {
+      this.$router.push({
+        path: `./singer/${singer.id}`
+      })
+      this.setSinger(singer)
+    },
+    ...mapMutations({
+      setSinger: 'SET_SINGER'
+    })
   },
   watch: {
     letter () {

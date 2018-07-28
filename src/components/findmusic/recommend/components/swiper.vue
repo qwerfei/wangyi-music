@@ -11,7 +11,7 @@
 
 <script>
 import {getSwiper} from 'api/recommend'
-import {ERR_OK} from 'common/api'
+import {ERR_OK} from 'common/js/api'
 export default {
   name: 'RecommendSwiper',
   data () {

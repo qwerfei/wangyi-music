@@ -29,6 +29,9 @@ export default {
   mounted() {
     this.scroll = new Bscroll(this.$refs.warpper, {click: true})
   },
+  methods: {
+    
+  }
 }
 </script>
 

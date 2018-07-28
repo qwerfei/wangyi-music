@@ -2,7 +2,10 @@
   <div class="rank">
     <div class="toplist" ref="toplist">
       <ul>
-        <li class="item" v-for="item in topList" :key="item.id">
+        <li class="item" 
+            v-for="item in topList" 
+            :key="item.id"
+            @click="selectRank(item)">
           <div class="icon">
             <img v-lazy="item.picUrl"/>
           </div>
@@ -15,13 +18,15 @@
         </li>
       </ul>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Bscroll from 'better-scroll'
 import {getTopList} from 'api/rank'
-import {ERR_OK} from 'common/api'
+import {ERR_OK} from 'common/js/api'
+import {mapMutations} from 'vuex'
 export default {
   data() {
     return {
@@ -41,6 +46,16 @@ export default {
         }
       })
     },
+    //排行榜歌曲详情跳转
+    selectRank(item) {
+      this.$router.push({
+        path: `./rank/${item.id}`
+      })
+      this.setRank(item)
+    },
+    ...mapMutations({
+      setRank: 'SET_RANK'
+    })
   }
 }
 </script>

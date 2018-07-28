@@ -1,5 +1,5 @@
-import jsonp from 'common/jsonp'
-import {commonParams, options} from 'common/api'
+import jsonp from 'common/js/jsonp'
+import {commonParams, options} from 'common/js/api'
 import axios from 'axios'
 
 //获取轮播图数据
@@ -16,9 +16,9 @@ export function getSwiper() {
   return jsonp(url, data, options)
 }
 
-//获取推荐歌单详情列表
-export function getDiscList() {
-  const url = '/api/getDiscList'
+//获取推荐歌单列表数据
+export function getRecommendList() {
+  const url = '/api/getRecommendList'
 
   const data = Object.assign({}, commonParams, {
     platform: 'yqq',
@@ -30,6 +30,29 @@ export function getDiscList() {
     needNewCode: 0,
     categoryId: 10000000,
     rnd: Math.random(),
+    format: 'json'
+  })
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取歌单歌曲详情列表数据
+export function getRecommendDetail(disstid) {
+  const url = '/api/getRecommendDetail'
+
+  const data = Object.assign({}, commonParams, {
+    disstid,
+    type: 1,
+    json: 1,
+    utf8: 1,
+    onlysong: 0,
+    platform: 'yqq',
+    hostUin: 0,
+    needNewCode: 0,
     format: 'json'
   })
 

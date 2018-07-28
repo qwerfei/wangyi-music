@@ -6,6 +6,9 @@ import Community from 'components/community/community'
 import Recommend from 'components/findmusic/recommend/recommend'
 import Singer from 'components/findmusic/singer/singer'
 import Rank from 'components/findmusic/rank/rank'
+import RecommendDetail from 'components/songlist-detail/recommend-detail'
+import SingerDetail from 'components/songlist-detail/singer-detail'
+import RankDetail from 'components/songlist-detail/rank-detail'
 
 Vue.use(Router)
 
@@ -36,16 +39,34 @@ export default new Router({
         // findmusic推荐
         path: '/findmusic/recommend',
         component: Recommend,
+        children: [
+          {
+            path: ':id',
+            component: RecommendDetail
+          }
+        ]
       },
       {
         // findmusic歌手
         path: '/findmusic/singer',
         component: Singer,
+        children: [
+          {
+            path: ':id',
+            component: SingerDetail
+          }
+        ]
       },
       {
         // findmusic排行
         path: '/findmusic/rank',
-        component: Rank
+        component: Rank,
+        children: [
+          {
+            path: ':id',
+            component: RankDetail
+          }
+        ]
       }]
     },
     {
