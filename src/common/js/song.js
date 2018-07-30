@@ -1,4 +1,8 @@
-//将创建的歌曲对象进行封装
+import {getLyric} from 'api/song'
+import {ERR_OK} from 'common/js/api'
+import {Base64} from 'js-base64'
+
+//将创建歌曲对象进行封装
 export default class Song {
   constructor({id, mid, singer, name, album, duration, image}) {
     this.id = id
@@ -8,6 +12,23 @@ export default class Song {
     this.album = album
     this.duration = duration
     this.image = image
+  }
+
+  getLyric() {
+    if (this.lyric) {
+      return Promise.resolve(this.lyric)
+    }
+
+    return new Promise((resolve, reject) => {
+      getLyric(this.mid).then((res) => {
+        if (res.retcode === ERR_OK) {
+          this.lyric = Base64.decode(res.lyric)
+          resolve(this.lyric)
+        } else {
+          reject('no lyric')
+        }
+      })
+    })
   }
 }
 
@@ -19,7 +40,7 @@ export function createSong(musicData) {
       name: musicData.songname,
       album: musicData.albumname,
       duration: musicData.interval,
-      image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
+      image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`
     })
   }
   

@@ -16,7 +16,7 @@
         </div>
         <div class="songlist-warpper">
           <div class="play" ref="play">
-            <i class="icon icon-play"></i>
+            <i class="icon icon-play" @click="random"></i>
             <span class="text">随机播放全部</span>
             <span class="count">(共{{songs.length}}首)</span>
           </div>
@@ -81,6 +81,11 @@
           index
         })
       },
+      random() {
+        this.randomPlay({
+          list: this.songs
+        })
+      },
       _initScroll() {
         this.scroll = new Bscroll(this.$refs.list, {
           probeType: 3,
@@ -93,7 +98,8 @@
         })
       },
       ...mapActions([
-        'selectPlay'
+        'selectPlay',
+        'randomPlay'
       ])
     },
     watch: {
