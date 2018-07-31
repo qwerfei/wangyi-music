@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MyMusic from 'components/mymusic/mymusic'
 import FindMusic from 'components/findmusic/findmusic'
 import Community from 'components/community/community'
+import Search from 'components/search/search'
 import Recommend from 'components/findmusic/recommend/recommend'
 import Singer from 'components/findmusic/singer/singer'
 import Rank from 'components/findmusic/rank/rank'
@@ -73,6 +74,16 @@ export default new Router({
       // 顶部三个的第三页
       path: '/community',
       component: Community
-    }
+    },
+    {
+      path: '/search',
+      component: Search,
+      children: [
+        {
+          path: ':id',
+          component: SingerDetail
+        }
+      ]
+    },
   ]
 })

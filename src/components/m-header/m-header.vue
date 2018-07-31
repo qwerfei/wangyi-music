@@ -13,7 +13,9 @@
           <i class="community icon-community"></i>
         </router-link>
       </div>
-      <i class="icons icon-search music"></i>
+      <router-link tag="div" to="/search">
+        <i class="icons icon-search music"></i>
+      </router-link>
     </div>
     <router-view></router-view>
   </div>
