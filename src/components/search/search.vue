@@ -33,7 +33,10 @@
       <div class="search-result" v-show="query">
         <suggest :query="query" @select="saveSearch"></suggest>
       </div>
-      <confirm ref="confirm" @confirm="clearSearchHistory"></confirm>
+      <confirm ref="confirm" 
+               @confirm="clearSearchHistory"
+               text="是否清空搜索历史">
+      </confirm>
       <router-view></router-view>
     </div>
   </transition>

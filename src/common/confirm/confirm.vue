@@ -3,7 +3,7 @@
     <div class="confirm" v-show="showFlag" @click.stop>
       <div class="confirm-wrapper">
         <div class="confirm-content">
-          <p class="text">是否清空所有搜索历史</p>
+          <p class="text">{{text}}</p>
           <div class="operate">
             <div @click="cancel" class="operate-btn left">取消</div>
             <div @click="confirm" class="operate-btn">确定</div>
@@ -16,6 +16,12 @@
 
 <script>
   export default {
+    props: {
+      text: {
+        type: String,
+        default: ''
+      }
+    },
     data() {
       return {
         showFlag: false

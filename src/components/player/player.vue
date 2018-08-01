@@ -74,7 +74,7 @@
                 <i class="next icon-nextdetail" @click="next"></i>
               </div>
               <div class="icon">
-                <i class="menu icon-list-music"></i>
+                <i class="menu icon-list-music" @click.stop="showPlaylist"></i>
               </div>
             </div>
           </div>
@@ -95,11 +95,12 @@
             <i class="icon-mini" :class="playIcon"></i>
           </progress-circle>
         </div>
-        <div class="control">
+        <div class="control" @click.stop="showPlaylist">
           <i class="icon-list-music"></i>
         </div>
       </div>
     </transition>
+    <playlist ref="playlist" @stopMusic="stopMusic"></playlist>
     <audio ref="audio"
            autoplay
            @canplay="ready"
@@ -119,11 +120,15 @@ import ProgressCircle from 'common/progress-circle/progress-circle'
 import {playMode} from 'common/js/config'
 import {shuffle} from 'common/js/util'
 import Lyric from 'lyric-parser'
+import Playlist from 'components/playlist/playlist'
+import {playerMixin} from 'common/js/mixin'
 
 export default {
+  mixins: [playerMixin],
   components: {
     ProgressBar,
-    ProgressCircle
+    ProgressCircle,
+    Playlist
   },
   data () {
     return {
@@ -164,15 +169,22 @@ export default {
     },
     ...mapGetters([
       'fullScreen',
-      'playlist',
-      'currentSong',
+      // 'playlist',
+      // 'currentSong',
       'playing',
       'currentIndex',
-      'mode',
-      'sequenceList',
+      // 'mode',
+      // 'sequenceList',
     ])
   },
   methods: {
+    showPlaylist() {
+      this.$refs.playlist.show()
+    },
+    // 删除最后一首的时候暂停音乐
+    stopMusic () {
+      this.$refs.audio.pause()
+    },
     //--------------------dom切换区------------
     back() {
       this.setFullScreen(false)
@@ -269,25 +281,25 @@ export default {
         this.currentLyric.togglePlay()
       }
     },
-    changeMode () {
-      const mode = (this.mode + 1) % 3
-      this.setPlayMode(mode)
-      let list = null
-      if (mode === playMode.random) {
-        list = shuffle(this.sequenceList)
-      } else {
-        list = this.sequenceList
-      }
-      this._resetCurrentIndex(list)
-      this.setPlaylist(list)
-    },
-    //调整歌曲索引确保随机播放歌曲与索引一致
-    _resetCurrentIndex (list) {
-      let index = list.findIndex((item) => {
-        return item.id === this.currentSong.id
-      })
-      this.setCurrentIndex(index)
-    },
+    // changeMode () {
+    //   const mode = (this.mode + 1) % 3
+    //   this.setPlayMode(mode)
+    //   let list = null
+    //   if (mode === playMode.random) {
+    //     list = shuffle(this.sequenceList)
+    //   } else {
+    //     list = this.sequenceList
+    //   }
+    //   this._resetCurrentIndex(list)
+    //   this.setPlaylist(list)
+    // },
+    // //调整歌曲索引确保随机播放歌曲与索引一致
+    // _resetCurrentIndex (list) {
+    //   let index = list.findIndex((item) => {
+    //     return item.id === this.currentSong.id
+    //   })
+    //   this.setCurrentIndex(index)
+    // },
     //根据传递的进度条百分比改变歌曲时间
     progressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent
@@ -328,10 +340,10 @@ export default {
     },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
-      setPlayingState: 'SET_PLAYING_STATE',
-      setCurrentIndex: 'SET_CURRENT_INDEX',
-      setPlayMode: 'SET_PLAY_MODE',
-      setPlaylist: 'SET_PLAYLIST'
+      // setPlayingState: 'SET_PLAYING_STATE',
+      // setCurrentIndex: 'SET_CURRENT_INDEX',
+      // setPlayMode: 'SET_PLAY_MODE',
+      // setPlaylist: 'SET_PLAYLIST'
     })
   },
   watch: {
