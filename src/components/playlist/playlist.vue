@@ -20,9 +20,9 @@
                  ref="listItem">
               <i class="current" :class="getCurrentIcon(item)"></i>
               <span class="text">{{item.name}}</span>
-              <!-- <span class="like">
-                <i class="icon-like"></i>
-              </span> -->
+              <span class="like" @click.stop="toggleFavorite(item)">
+                <i class="icon-like" :style="getFavoriteIcon(item)"></i>
+              </span>
               <span class="delete" @click.stop="deleteOne(item)">
                 <i class="icon-edit"></i>
               </span>

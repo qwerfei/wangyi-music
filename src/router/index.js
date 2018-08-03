@@ -10,6 +10,8 @@ import Rank from 'components/findmusic/rank/rank'
 import RecommendDetail from 'components/songlist-detail/recommend-detail'
 import SingerDetail from 'components/songlist-detail/singer-detail'
 import RankDetail from 'components/songlist-detail/rank-detail'
+import Like from 'components/user/myfavorite'
+import History from 'components/user/playhistory'
 
 Vue.use(Router)
 
@@ -23,7 +25,19 @@ export default new Router({
     {
       // 顶部三个的第一页 
       path: '/mymusic',
-      component: MyMusic
+      component: MyMusic,
+      children: [
+        {
+          //我的收藏
+          path: '/like',
+          component: Like
+        },
+        {
+          //播放历史
+          path: '/history',
+          component: History
+        }
+      ]
     },
     {
       // findmusic 顶部三个的第二页

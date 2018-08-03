@@ -28,7 +28,9 @@
                 </div>
               </div>
               <div class="musicDo">
-                <i class="icon icon-like"></i>
+                <i class="icon icon-like"
+                   @click.stop="toggleFavorite(currentSong)"
+                   :style="getFavoriteIcon(currentSong)"></i>
                 <i class="icon icon-download"></i>
                 <i class="icon icon-msg"></i>
                 <i class="icon icon-list-circle-small"></i>
@@ -202,6 +204,7 @@ export default {
     //------------------播放器函数区-----------
     ready() {
       this.songReady = true
+      this.savePlayHistory(this.currentSong)
     },
     end() {
       if (this.mode === playMode.loop) {
@@ -344,7 +347,10 @@ export default {
       // setCurrentIndex: 'SET_CURRENT_INDEX',
       // setPlayMode: 'SET_PLAY_MODE',
       // setPlaylist: 'SET_PLAYLIST'
-    })
+    }),
+    ...mapActions([
+      'savePlayHistory'
+    ])
   },
   watch: {
     currentSong(newVal, oldVal) {
@@ -503,23 +509,23 @@ export default {
                   transform:translate3d(-50%,0,0)
                   z-index:1
           .musicDo
-              width:80vw
-              position:absolute
-              height:40px
-              left:50%
-              bottom:0
-              transform:translate3d(-50%,0,0)
-              display:flex
-              align-items:center
-              justify-content:space-around
-              i
-                display:inline-block
-                width:40px
-                width:40px
-                line-height:40px
-                text-align:center
-                color:rgba(255,255,255,0.8)
-                font-size:22px
+            width:80vw
+            position:absolute
+            height:40px
+            left:50%
+            bottom:0
+            transform:translate3d(-50%,0,0)
+            display:flex
+            align-items:center
+            justify-content:space-around
+            i
+              display:inline-block
+              width:40px
+              width:40px
+              line-height:40px
+              text-align:center
+              color:rgba(255,255,255,0.8)
+              font-size:22px
         .lyriclist
           position:absolute
           top:10vh

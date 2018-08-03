@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header-wrapper">
-      <i class="icons icon-menu"></i>
+      <i class="icons icon-menu" @click="showSiderbar"></i>
       <div class="centermenu">
         <router-link tag="i" to="/mymusic">
           <i class="music icon-music"></i>
@@ -17,13 +17,22 @@
         <i class="icons icon-search music"></i>
       </router-link>
     </div>
+    <sidebar ref="sidebar"></sidebar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Sidebar from 'components/sidebar/sidebar.vue'
 export default {
-
+  components: {
+    Sidebar
+  },
+  methods: {
+    showSiderbar() {
+      this.$refs.sidebar.show()
+    }
+  }
 }
 </script>
 
