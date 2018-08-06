@@ -62,7 +62,7 @@ export default {
     ])
   },
   mounted() {
-    this.scroll = new Bscroll(this.$refs.playList)
+    this.scroll = new Bscroll(this.$refs.playList, {click: true})
   },
   methods: {
     back () {

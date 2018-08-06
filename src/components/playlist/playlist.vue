@@ -55,7 +55,7 @@
       }
     },
     mounted() {
-      this.scroll = new Bscroll(this.$refs.listContent)
+      this.scroll = new Bscroll(this.$refs.listContent, {click: true})
     },
     computed: {
       modeText() {
@@ -193,6 +193,7 @@
           height: 40px
           padding: 0 30px 0 20px
           overflow: hidden
+          cursor:pointer
           &.list-enter-active, &.list-leave-active
             transition: all 0.1s
           &.list-enter, &.list-leave-to

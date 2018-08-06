@@ -12,7 +12,7 @@
             <p class="singer">歌手:{{item.singername}}</p>
           </div>
         </div>
-        <div class="name" >
+        <div class="name">
           <p class="song" v-html="item.name"></p>
           <p class="singer" v-html="item.singer"></p>
         </div>
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     _initScroll() {
-      this.scroll = new Bscroll(this.$refs.suggest)
+      this.scroll = new Bscroll(this.$refs.suggest, {click: true})
       this.scroll.on('scrollEnd', () => {
         if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
           //滚动到底部重新发送请求实现下拉加载
@@ -167,6 +167,7 @@ export default {
         display: flex
         align-items: center
         padding: 10px 0 10px 30px
+        cursor:pointer
       .singer-suggest
         flex: 1
         overflow: hidden

@@ -2,13 +2,13 @@
   <div class="findmusic">
     <div class="tab">
         <router-link class="menu-list" tag="div" to="/findmusic/recommend">
-        <span class="menu-list-div">个性推荐</span>
+          <span class="menu-list-div">个性推荐</span>
         </router-link>
         <router-link class="menu-list" tag="div" to="/findmusic/singer">
-        <span class="menu-list-div">歌手</span>
+          <span class="menu-list-div">歌手</span>
         </router-link>
         <router-link class="menu-list" tag="div" to="/findmusic/rank">
-        <span class="menu-list-div">排行</span>
+          <span class="menu-list-div">排行</span>
         </router-link>
     </div>
     <router-view></router-view>

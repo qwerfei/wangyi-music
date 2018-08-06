@@ -13,12 +13,14 @@
           <i class="community icon-community"></i>
         </router-link>
       </div>
-      <router-link tag="div" to="/search">
+      <router-link tag="i" to="/search">
         <i class="icons icon-search music"></i>
       </router-link>
     </div>
     <sidebar ref="sidebar"></sidebar>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 

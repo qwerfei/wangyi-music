@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus" scoped>
+<style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~assets/stylus/variable"
  .recommend 
   width: 100%

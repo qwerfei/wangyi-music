@@ -1,34 +1,34 @@
 <template>
-<transition name="slide">
-  <div class="user">
-    <div class="header" @click="back">
-      <i class="icon icon-back"></i>
-      <span>我的收藏</span>
-    </div>
-    <div class="play-btn">
-      <i class="icon icon-playdetail" @click="random"></i>
-      <span class="text">随机播放全部</span>
-      <span class="count">(共{{count}}首)</span>
-      <span class="clear" @click.stop="showConfirm">
-        <i class="icon-delete"></i>
-      </span>
-    </div>
-    <div class="list-wrapper" ref="listWrapper">
-      <div ref="favoriteList" class="list-scroll">
-        <div class="list-inner">
-          <song-list :songs="favoriteList" @select="selectSong"></song-list>
+  <transition name="slide">
+    <div class="user">
+      <div class="header" @click="back">
+        <i class="icon icon-back"></i>
+        <span>我的收藏</span>
+      </div>
+      <div class="play-btn">
+        <i class="icon icon-playdetail" @click="random"></i>
+        <span class="text">随机播放全部</span>
+        <span class="count">(共{{count}}首)</span>
+        <span class="clear" @click.stop="showConfirm">
+          <i class="icon-delete"></i>
+        </span>
+      </div>
+      <div class="list-wrapper" ref="listWrapper">
+        <div ref="favoriteList" class="list-scroll">
+          <div class="list-inner">
+            <song-list :songs="favoriteList" @select="selectSong"></song-list>
+          </div>
         </div>
       </div>
+      <confirm ref="confirm" 
+          @confirm="clearFavoriteList"
+          text="是否清空收藏列表">
+      </confirm>
+      <div class="no-result-wrapper" v-show="noResult">
+        <no-result :title="noResultDesc"></no-result>
+      </div>
     </div>
-    <confirm ref="confirm" 
-        @confirm="clearFavoriteList"
-        text="是否清空收藏列表">
-    </confirm>
-    <div class="no-result-wrapper" v-show="noResult">
-      <no-result :title="noResultDesc"></no-result>
-    </div>
-  </div>
-</transition>
+  </transition>
 </template>
 
 <script>
@@ -62,7 +62,7 @@ export default {
     ])
   },
   mounted() {
-    this.scroll = new Bscroll(this.$refs.favoriteList)
+    this.scroll = new Bscroll(this.$refs.favoriteList, {click: true})
   },
   methods: {
     back () {

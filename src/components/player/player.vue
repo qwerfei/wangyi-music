@@ -14,44 +14,46 @@
             </div>
             <i class="share icon-share"></i>
           </div>
-          <transition name="fade">
-            <div class="content-wapper"  v-show="currentShow === 'cd'" @click="changeMiddle">
-              <div class="cd">
-                <div class="cd-play">
-                  <div class="trigger" :class="triggerCls"></div>
+          <div class="content-middle" @click.stop="changeMiddle">
+            <transition name="fade">
+              <div class="content-wapper"  v-show="currentShow === 'cd'">
+                <div class="cd">
+                  <div class="cd-play">
+                    <div class="trigger" :class="triggerCls"></div>
+                  </div>
+                  <div class="cd-content">
+                    <div class="cd-wrapper" :class="cdCls">
+                      <div class="cd-bg"></div>
+                      <img class="img" :src="currentSong.image">
+                    </div>
+                  </div>
                 </div>
-                <div class="cd-content">
-                  <div class="cd-wrapper" :class="cdCls">
-                    <div class="cd-bg"></div>
-                    <img class="img" :src="currentSong.image">
+                <div class="musicDo">
+                  <i class="icon icon-like"
+                    @click.stop="toggleFavorite(currentSong)"
+                    :style="getFavoriteIcon(currentSong)"></i>
+                  <i class="icon icon-download"></i>
+                  <i class="icon icon-msg"></i>
+                  <i class="icon icon-list-circle-small"></i>
+                </div>
+              </div>
+            </transition>
+            <transition name="fade">
+              <div class="lyriclist" ref="lyriclist" v-show="currentShow === 'lyric'">
+                <div class="lyric-wrapper" ref="lrc">
+                  <div v-if="currentLyric">
+                    <p ref="lyricLine"
+                      class="text"
+                      :class="{'current': currentLineNum ===index}"
+                      v-for="(line,index) in currentLyric.lines"
+                      :key="index">
+                      {{line.txt}}
+                    </p>
                   </div>
                 </div>
               </div>
-              <div class="musicDo">
-                <i class="icon icon-like"
-                   @click.stop="toggleFavorite(currentSong)"
-                   :style="getFavoriteIcon(currentSong)"></i>
-                <i class="icon icon-download"></i>
-                <i class="icon icon-msg"></i>
-                <i class="icon icon-list-circle-small"></i>
-              </div>
-            </div>
-          </transition>
-          <transition name="fade">
-            <div class="lyriclist" ref="lyriclist" v-show="currentShow === 'lyric'" @click="changeMiddle">
-              <div class="lyric-wrapper" ref="lrc">
-                <div v-if="currentLyric">
-                  <p ref="lyricLine"
-                     class="text"
-                     :class="{'current': currentLineNum ===index}"
-                     v-for="(line,index) in currentLyric.lines"
-                     :key="index">
-                     {{line.txt}}
-                  </p>
-                </div>
-              </div>
-            </div>
-				</transition>
+            </transition>
+          </div>
           <div class="content-footer">
             <div class="progress-wrapper">
               <span class="time time-l">{{format(currentTime)}}</span>
@@ -139,7 +141,7 @@ export default {
       currentTime: 0,
       currentLyric: null,
       currentLineNum: 0,
-      currentShow: 'cd',
+      currentShow: 'cd'
     }
   },
   mounted() {
@@ -147,15 +149,6 @@ export default {
   },
   computed: {
     //样式切换
-    iconMode() {
-      if (this.mode === playMode.sequence) {
-        return 'icon-music-shunxu'
-      } else if (this.mode === playMode.loop) {
-        return 'icon-music-danqu1'
-      } else {
-        return 'icon-music-random'
-      }
-    },
     playIcon() {
       return this.playing ? 'icon-pause-detail' : 'icon-playdetail'
     },
@@ -190,6 +183,7 @@ export default {
     //--------------------dom切换区------------
     back() {
       this.setFullScreen(false)
+      this.currentShow = 'cd'
     },
     open() {
       this.setFullScreen(true)
@@ -277,6 +271,9 @@ export default {
     },
     //播放暂停切换
     togglePlaying() {
+      if (!this.songReady) {
+        return
+      }
       const audio = this.$refs.audio
       this.setPlayingState(!this.playing) 
       this.playing ? audio.play() : audio.pause()
@@ -284,25 +281,6 @@ export default {
         this.currentLyric.togglePlay()
       }
     },
-    // changeMode () {
-    //   const mode = (this.mode + 1) % 3
-    //   this.setPlayMode(mode)
-    //   let list = null
-    //   if (mode === playMode.random) {
-    //     list = shuffle(this.sequenceList)
-    //   } else {
-    //     list = this.sequenceList
-    //   }
-    //   this._resetCurrentIndex(list)
-    //   this.setPlaylist(list)
-    // },
-    // //调整歌曲索引确保随机播放歌曲与索引一致
-    // _resetCurrentIndex (list) {
-    //   let index = list.findIndex((item) => {
-    //     return item.id === this.currentSong.id
-    //   })
-    //   this.setCurrentIndex(index)
-    // },
     //根据传递的进度条百分比改变歌曲时间
     progressBarChange(percent) {
       const currentTime = this.currentSong.duration * percent
@@ -330,6 +308,9 @@ export default {
           this.currentLyric.play()
         }
         console.log(this.currentLyric)
+      }).catch(() => {
+        this.currentLyric = null
+        this.currentLineNum = 0
       })
     },
     handleLyric ({lineNum, txt}) {
@@ -362,6 +343,8 @@ export default {
       }
       if (this.currentLyric) {
         this.currentLyric.stop()
+        this.currentTime = 0
+        this.currentLineNum = 0
       }
       this._getSong(newVal.mid)
       this._getLyric()
@@ -604,7 +587,7 @@ export default {
       position: fixed
       left: 0
       bottom: 0
-      z-index: 180
+      z-index: 100
       width: 100%
       height: 60px
       background: #ddd
