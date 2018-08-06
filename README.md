@@ -6,7 +6,7 @@
 项目演示地址：[wangyi-music](http://47.106.246.136)，PC端建议使用chrome浏览器手机调试模式
 
 二维码访问地址
-![项目二维码.png](https://github.com/qwerfei/wangyi-music/tree/master/static/png/1533564598.png)
+![项目二维码.png](https://github.com/qwerfei/wangyi-music/blob/master/static/png/1533564598.png)
 
 ### 项目技术架构
 ***
